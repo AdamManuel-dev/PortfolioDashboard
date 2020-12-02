@@ -18,15 +18,18 @@
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"strict": true,
-		"types": [
-			"svelte"
-		],
+		"esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+		"types": ["svelte"]
 	},
 	"include": [
 		"src/**/*",
-		"src/node_modules/**/*"
+		"src/node_modules/**/*",
+		"setup-fauna/**.ts"
 	],
 	"exclude": [
+		"src/**/**.test.ts",
 		"node_modules/*",
 		"__sapper__/*",
 		"static/*",

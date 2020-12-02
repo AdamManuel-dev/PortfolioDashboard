@@ -1,20 +1,30 @@
 import "reflect-metadata";
+import { GraphQLModule } from "@graphql-modules/core";
 import { ApolloServer } from "apollo-server-express";
-import { Query, Resolver, buildSchema } from "type-graphql";
 
-@Resolver()
-class HelloWorldResolver {
-	@Query(() => String, { description: "Example thing to query" })
-	async helloWorld(): Promise<string> {
-		return "Hello world!";
-	}
-}
+import BlogModule from "./blogs/blog.module";
+import ProjectModule from "./projects/project.module";
+import NewsModule from "./news/news.module";
+// import InterestModule from "./interests/interest.module";
+
+const modules = [
+	BlogModule,
+	ProjectModule,
+	NewsModule,
+	// InterestModule
+];
 
 export const createApolloServer = async (): Promise<ApolloServer> => {
-	const schema = await buildSchema({ resolvers: [HelloWorldResolver] });
+	const { schema } = new GraphQLModule({
+		// join other sub-modules
+		imports: modules,
+	});
 
 	const apolloServer = new ApolloServer({
 		schema,
+		context: {
+			//Injected context goes here
+		},
 		playground: true,
 		introspection: true,
 	});
