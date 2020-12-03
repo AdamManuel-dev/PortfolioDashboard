@@ -197,7 +197,7 @@ $: path = $page.path.slice(1);
               </div>
             </ListItem>
           </a>
-          <a href="/drag-drop">
+          <a href="/examples/drag-drop">
             <ListItem>
               <span slot="prepend" class="ml-n1">
                 <svg
@@ -220,7 +220,7 @@ $: path = $page.path.slice(1);
               </div>
             </ListItem>
           </a>
-          <a href="/markdown">
+          <a href="/examples/markdown">
             <ListItem>
               <span slot="prepend" class="ml-n1">
                 <svg
@@ -246,7 +246,7 @@ $: path = $page.path.slice(1);
               </div>
             </ListItem>
           </a>
-          <a href="/api">
+          <a href="/examples/api">
             <ListItem>
               <span slot="prepend" class="ml-n1">
                 <svg
@@ -267,7 +267,7 @@ $: path = $page.path.slice(1);
               </div>
             </ListItem>
           </a>
-          <a href="/table">
+          <a href="/examples/table">
             <ListItem>
               <span slot="prepend" class="ml-n1">
                 <svg
@@ -290,39 +290,115 @@ $: path = $page.path.slice(1);
               </div>
             </ListItem>
           </a>
-          <div class="flex flex-row items-center justify-end w-full mt-3">
-            {#if !mini || mobile}
-              <div in:fade="{{ delay: 50 }}">
-                <Switch
-                  bind:checked="{darkmode}"
-                  on:change="{() => {
-                    if (darkmode) theme = 'dark';
-                    else theme = 'light';
-                  }}"
-                  inset
-                >
-                  Darkmode
-                </Switch>
-              </div>
-            {/if}
-          </div>
-          <a href="/signup">
+          <a href="/blog">
             <ListItem>
+              <span slot="prepend" class="ml-n1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-9"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </span>
               <div slot="append">
                 {#if !mini || mobile}
-                  <span class="w-full" in:fade="{{ delay: 50 }}">Register</span>
+                  <span class="w-full" transition:fade>Blog</span>
                 {/if}
               </div>
             </ListItem>
           </a>
-          <a href="/login">
+          <a href="/news">
             <ListItem>
+              <span slot="prepend" class="ml-n1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-9"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  ></path>
+                </svg>
+              </span>
               <div slot="append">
                 {#if !mini || mobile}
-                  <span class="w-full" in:fade="{{ delay: 50 }}">Login</span>
+                  <span class="w-full" transition:fade>News</span>
                 {/if}
               </div>
             </ListItem>
+          </a>
+          <a href="/resources">
+            <ListItem>
+              <span slot="prepend" class="ml-n1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-9"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                  ></path>
+                </svg>
+              </span>
+              <div slot="append">
+                {#if !mini || mobile}
+                  <span class="w-full" transition:fade>Resources</span>
+                {/if}
+              </div>
+            </ListItem>
+            <div class="flex flex-row items-center justify-end w-full mt-3">
+              {#if !mini || mobile}
+                <div in:fade="{{ delay: 50 }}">
+                  <Switch
+                    bind:checked="{darkmode}"
+                    on:change="{() => {
+                      if (darkmode) theme = 'dark';
+                      else theme = 'light';
+                    }}"
+                    inset
+                  >
+                    Darkmode
+                  </Switch>
+                </div>
+              {/if}
+            </div>
+            <a href="/projects">
+              <ListItem>
+                <div slot="append">
+                  {#if !mini || mobile}
+                    <span
+                      class="w-full"
+                      in:fade="{{ delay: 50 }}"
+                    >Register</span>
+                  {/if}
+                </div>
+              </ListItem>
+            </a>
+            <a href="/login">
+              <ListItem>
+                <div slot="append">
+                  {#if !mini || mobile}
+                    <span class="w-full" in:fade="{{ delay: 50 }}">Login</span>
+                  {/if}
+                </div>
+              </ListItem>
+            </a>
           </a>
         </List>
       </NavigationDrawer>
