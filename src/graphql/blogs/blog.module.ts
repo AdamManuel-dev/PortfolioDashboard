@@ -2,13 +2,13 @@ import { GraphQLModule } from "@graphql-modules/core";
 import { buildSchemaSync } from "type-graphql";
 
 import BlogResolver from "./blog.resolver";
-import BlogService from "./blog.service";
+import { BlogContainer } from "./blogs";
 
 const resolvers = [BlogResolver] as const;
 
 // @ts-ignore
 const BlogModule = new GraphQLModule({
-  providers: [BlogService, ...resolvers],
+  providers: [BlogContainer, ...resolvers],
   extraSchemas: [
     buildSchemaSync({
       resolvers,

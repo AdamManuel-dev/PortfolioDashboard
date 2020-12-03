@@ -2,13 +2,13 @@ import { GraphQLModule } from "@graphql-modules/core";
 import { buildSchemaSync } from "type-graphql";
 
 import ProjectResolver from "./project.resolver";
-import ProjectService from "./project.service";
+import { ProjectContainer } from "./projects";
 
 const resolvers = [ProjectResolver] as const;
 
 // @ts-ignore
 const ProjectModule = new GraphQLModule({
-  providers: [ProjectService, ...resolvers],
+  providers: [ProjectContainer, ...resolvers],
   extraSchemas: [
     buildSchemaSync({
       resolvers,

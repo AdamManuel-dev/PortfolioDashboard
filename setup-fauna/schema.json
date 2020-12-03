@@ -17,10 +17,10 @@
       ]
     },
     {
-      "name": "interests",
+      "name": "resources",
       "indexes": [
         {
-          "name": "interests_by_name",
+          "name": "resources_by_name",
           "terms": [
             "name",
             "tags"

@@ -1,72 +1,74 @@
 import { Driver, Helper } from "../src/graphql/services/faunadb";
+
 const Schema = {
-  "collections": [
+  collections: [
     {
-      "name": "blogs",
-      "indexes": [
+      name: "blogs",
+      indexes: [
         {
-          "name": "blogs_by_name",
-          "terms": [
-            "name",
-            "tags"
-          ],
-          "values": [
-            "name",
-            "tags"
-          ]
-        }
-      ]
+          name: "blogs_by_name",
+          terms: ["name"],
+          values: [],
+        },
+        {
+          name: "all_blogs",
+          terms: [],
+          values: [],
+        },
+      ],
     },
     {
-      "name": "interests",
-      "indexes": [
+      name: "resources",
+      indexes: [
         {
-          "name": "interests_by_name",
-          "terms": [
-            "name",
-            "tags"
-          ],
-          "values": [
-            "name",
-            "tags"
-          ]
-        }
-      ]
+          name: "resources_by_name",
+          terms: ["name"],
+          values: [],
+        },
+        {
+          name: "resources_by_tags",
+          terms: ["tags"],
+          values: [],
+        },
+        {
+          name: "all_resources",
+          terms: [],
+          values: [],
+        },
+      ],
     },
     {
-      "name": "news",
-      "indexes": [
+      name: "news",
+      indexes: [
         {
-          "name": "news_by_name",
-          "terms": [
-            "name",
-            "tags"
-          ],
-          "values": [
-            "name",
-            "tags"
-          ]
-        }
-      ]
+          name: "news_by_name",
+          terms: ["name"],
+          values: [],
+        },
+        {
+          name: "all_news",
+          terms: [],
+          values: [],
+        },
+      ],
     },
     {
-      "name": "projects",
-      "indexes": [
+      name: "projects",
+      indexes: [
         {
-          "name": "projects_by_name",
-          "terms": [
-            "name",
-            "tags"
-          ],
-          "values": [
-            "name",
-            "tags"
-          ]
-        }
-      ]
-    }
-  ]
-}
+          name: "projects_by_name",
+          terms: ["name"],
+          values: [],
+        },
+        {
+          name: "all_blogs",
+          terms: [],
+          values: [],
+        },
+      ],
+    },
+  ],
+};
 
 const { q, client } = new Driver("fnAD7kp-3IACAtgFGQyYhIT6lWKbw6ejlg0-fSCw");
 const h = new Helper({ q, client });
@@ -124,8 +126,13 @@ async function createIndexes() {
             return h.CreateIndex({
               name: currentIndex.name,
               collection: record,
-              terms: currentIndex.terms,
-              values: currentIndex.values,
+              terms: currentIndex.terms || [],
+              values:
+                currentIndex.values &&
+                Array.isArray(currentIndex.values) &&
+                currentIndex.values.length > 0
+                  ? ["ref", "ts", ...currentIndex.values]
+                  : [],
             });
           } else {
             console.debug(`INDEX "${currentIndex.name}" EXISTS.`);

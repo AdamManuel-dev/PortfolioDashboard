@@ -1,20 +1,20 @@
 import faunadb from "faunadb";
 
-type Client = faunadb.Client
+type Client = faunadb.Client;
 var q = faunadb.query;
 
 function dotPath(path: string) {
-  if (path === "id")
+  if (path === "ref")
     return {
-      field: ["id"],
+      field: ["ref"],
     };
-  if (path === "ts")
+  else if (path === "ts")
     return {
       field: ["ts"],
     };
-  if (path.includes(".")) {
+  if (path && typeof path === "string") {
     return {
-      field: ["data", ...path.split(".")],
+      field: ["data", ...(path.includes(".") ? path.split(".") : [path])],
     };
   } else {
     return {
@@ -56,8 +56,8 @@ export class Helper {
    * @param {string} collection
    * @param {string} id
    */
-  public async ListRecordsInCollection<T>(collection: string, id: string) {
-    return this.client.query<T[]>(q.Get(q.Ref(q.Collection(collection), id)));
+  public async GetRecordInCollection<T>(collection: string, id: string) {
+    return this.client.query<T>(q.Get(q.Ref(q.Collection(collection), id)));
   }
 
   /**
@@ -101,8 +101,71 @@ export class Helper {
    *
    * @param index
    */
-  async ListRecordInIndex<T>(index: string) {
-    return this.client.query<T>(q.Match(q.Index(index)));
+  async ListRecordInIndex<T>(
+    index: string,
+    collection: string,
+    token: {
+      pageSize: number;
+      after?: string;
+      before?: string;
+    }
+  ) {
+    const size = token && token.pageSize ? token.pageSize : 10;
+    const response = await this.client.query<{ data: T }>(
+      q.Map(
+        q.Paginate(q.Match(q.Index(index)), {
+          size,
+          ...(token && token.after
+            ? {
+                after: q.Ref(q.Collection(collection), token.after),
+              }
+            : {}),
+          ...(token && token.before
+            ? {
+                before: q.Ref(q.Collection(collection), token.before),
+              }
+            : {}),
+        }),
+        q.Lambda("X", q.Get(q.Var("X")))
+      )
+    );
+    return response.data;
+  }
+
+  /**
+   *
+   * @param index
+   */
+  async SearchRecordInIndex<T>(
+    index: string,
+    collection: string,
+    search: any[],
+    token: {
+      pageSize: number;
+      after?: string;
+      before?: string;
+    }
+  ) {
+    const size = token && token.pageSize ? token.pageSize : 10;
+    const response = await this.client.query<{ data: T }>(
+      q.Map(
+        q.Paginate(q.Match(q.Index(index), ...search), {
+          size,
+          ...(token && token.after
+            ? {
+                after: q.Ref(q.Collection(collection), token.after),
+              }
+            : {}),
+          ...(token && token.before
+            ? {
+                before: q.Ref(q.Collection(collection), token.before),
+              }
+            : {}),
+        }),
+        q.Lambda("X", q.Get(q.Var("X")))
+      )
+    );
+    return response.data;
   }
 
   /**
@@ -123,20 +186,12 @@ export class Helper {
   }) {
     const _terms = terms.map((term) => dotPath(term));
     const _values = values.map((value) => dotPath(value));
-    console.log({
-      name,
-      collection,
-      terms,
-      values,
-      _terms,
-      _values,
-    });
     return this.client.query(
       q.CreateIndex({
         name: name,
         source: q.Collection(collection),
-        terms: _terms,
-        values: _values,
+        ...(_terms && _terms.length > 0 ? { terms: _terms } : {}),
+        ...(_values && _values.length > 0 ? { values: _values } : {}),
       })
     );
   }

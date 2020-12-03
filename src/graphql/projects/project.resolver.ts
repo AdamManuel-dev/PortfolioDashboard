@@ -9,47 +9,118 @@ import {
   Root,
 } from "type-graphql";
 
-import { Project } from "./project.type";
-import ProjectService from "./project.service";
+import { Project, ProjectRecord, ProjectRef, Pagination } from "./project.type";
+import { ProjectContainer } from "./projects";
 
 @Injectable()
 @Resolver((of) => Project)
 export default class ProjectResolver {
-  constructor(
-    private readonly noteService: ProjectService
-  ) { }
+  constructor(private readonly projectsService: ProjectContainer) {}
 
-  @Query((returns) => [Project])
-  async projects() {
-    const notes = await this.noteService.getAll();
-    return notes.map((note) => {
-      return (note as any) as Project;
-    });
+  @Query((returns) => [ProjectRef])
+  async Projects(
+    @Arg("Page", {
+      nullable: true,
+      defaultValue: {
+        count: 10,
+        after: null,
+        before: null,
+      },
+    })
+    Page: Pagination
+  ) {
+    return (await this.projectsService.listProjects(Page)) as ProjectRef[];
   }
 
-  // @FieldResolver({
-  //   nullable: true,
-  // })
-  // async lead(@Root() note: Project) {
-  //   if (!!note && note.context.type === "Lead") {
-  //     const response = await this.leadService.getLeadByID(note.context.id);
-  //     console.log(response);
-  //     return response[0];
-  //   } else {
-  //     return (null as unknown) as Lead;
-  //   }
-  // }
+  @Query((returns) => ProjectRef)
+  async Project(
+    @Arg("ID", {
+      nullable: false,
+    })
+    ID: string
+  ) {
+    const projectss = await this.projectsService.getProject(ID);
+    return {
+      ...projectss,
+      ref: projectss.ref.toString(),
+    } as ProjectRef;
+  }
 
-  // @FieldResolver({
-  //   nullable: true,
-  // })
-  // async residence(@Root() note: Project) {
-  //   if (!!note && note.context.type === "Lead") {
-  //     const response = await this.leadService.getByResidenceID(note.context.id);
-  //     console.log(response);
-  //     return response[0];
-  //   } else {
-  //     return (null as unknown) as Lead;
-  //   }
-  // }
+  @Query((returns) => [ProjectRef])
+  async ProjectByName(
+    @Arg("name", {
+      nullable: false,
+    })
+    name: string,
+    @Arg("Page", {
+      nullable: true,
+      defaultValue: {
+        count: 10,
+        after: null,
+        before: null,
+      },
+    })
+    Page: Pagination
+  ) {
+    const projectss = await this.projectsService.getByProjectName(name, Page);
+    console.log(projectss);
+    return projectss as ProjectRef[];
+  }
+
+  @Query((returns) => [ProjectRef])
+  async ProjectByTag(
+    @Arg("Tag", {
+      nullable: false,
+    })
+    Tag: string,
+    @Arg("Page", {
+      nullable: true,
+      defaultValue: {
+        count: 10,
+        after: null,
+        before: null,
+      },
+    })
+    Page: Pagination
+  ) {
+    const projectss = await this.projectsService.getByProjectTag(Tag, Page);
+    return projectss as ProjectRef[];
+  }
+
+  @Mutation((returns) => ProjectRef)
+  async CreateProject(
+    @Arg("Record", {
+      nullable: false,
+    })
+    Record: ProjectRecord
+  ) {
+    const projects = await this.projectsService.createProject(Record);
+    return projects as ProjectRef;
+  }
+
+  @Mutation((returns) => ProjectRef)
+  async ReplaceProject(
+    @Arg("ID", {
+      nullable: false,
+    })
+    ID: string,
+    @Arg("Record", {
+      nullable: false,
+    })
+    Record: ProjectRecord
+  ) {
+    const projects = await this.projectsService.replaceProject(ID, Record);
+    return projects as ProjectRecord;
+  }
+
+  @Mutation((returns) => ProjectRef)
+  async DeleteProject(
+    @Arg("ID", {
+      nullable: false,
+    })
+    ID: string
+  ) {
+    const projects = await this.projectsService.deleteProject(ID);
+    return projects as ProjectRef;
+  }
 }

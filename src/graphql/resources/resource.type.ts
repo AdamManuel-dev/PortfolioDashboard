@@ -6,36 +6,66 @@ import {
   Root,
   InputType,
 } from "type-graphql";
-import type { New as NewsI } from "./news";
+import type { Resource as ResourceI } from "./resource";
 
 @ObjectType()
-export class News implements NewsI {
+export class Resource implements ResourceI {
   @Field((type) => String, {
     nullable: false,
   })
   public name!: string;
 
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  languages!: string[];
+
   @Field((type) => String, {
     nullable: false,
   })
-  public description!: string;
+  status!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
+  description!: string;
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  tags!: string[];
 }
 
 @InputType()
-export class NewsRecord {
+export class ResourceRecord {
   @Field((type) => String, {
     nullable: false,
   })
   public name!: string;
 
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  languages!: string[];
+
   @Field((type) => String, {
     nullable: false,
   })
-  public description!: string;
+  status!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
+  description!: string;
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  tags!: string[];
 }
 
 @ObjectType()
-export class NewsRef {
+export class ResourceRef {
   @Field((type) => String, {
     nullable: false,
   })
@@ -46,10 +76,10 @@ export class NewsRef {
   })
   ts!: number;
 
-  @Field((type) => News, {
+  @Field((type) => Resource, {
     nullable: false,
   })
-  data!: News;
+  data!: Resource;
 }
 
 @InputType()

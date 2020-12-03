@@ -2,13 +2,13 @@ import { GraphQLModule } from "@graphql-modules/core";
 import { buildSchemaSync } from "type-graphql";
 
 import NewsResolver from "./news.resolver";
-import NewsService from "./news.service";
+import { NewContainer } from "./news";
 
 const resolvers = [NewsResolver] as const;
 
 // @ts-ignore
 const NewsModule = new GraphQLModule({
-  providers: [NewsService, ...resolvers],
+  providers: [NewContainer, ...resolvers],
   extraSchemas: [
     buildSchemaSync({
       resolvers,

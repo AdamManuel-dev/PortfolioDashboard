@@ -5,13 +5,13 @@ import { ApolloServer } from "apollo-server-express";
 import BlogModule from "./blogs/blog.module";
 import ProjectModule from "./projects/project.module";
 import NewsModule from "./news/news.module";
-// import InterestModule from "./interests/interest.module";
+import ResourceModule from './resources/resource.module';
 
 const modules = [
 	BlogModule,
 	ProjectModule,
 	NewsModule,
-	// InterestModule
+	ResourceModule
 ];
 
 export const createApolloServer = async (): Promise<ApolloServer> => {

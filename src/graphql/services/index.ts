@@ -1,4 +1,2 @@
-export * from "./interests";
-export * from "./projects";
-export * from './blogs';
-export * from './news';
+export * from "../projects/projects";
+export * from '../news/news';
