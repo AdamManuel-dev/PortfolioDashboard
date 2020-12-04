@@ -39,19 +39,19 @@ export default class ProjectResolver {
     })
     ID: string
   ) {
-    const projectss = await this.projectsService.getProject(ID);
+    const projects = await this.projectsService.getProject(ID);
     return {
-      ...projectss,
-      ref: projectss.ref.toString(),
+      ...projects,
+      ref: projects.ref.toString(),
     } as ProjectRef;
   }
 
   @Query((returns) => [ProjectRef])
   async ProjectByName(
-    @Arg("name", {
+    @Arg("Name", {
       nullable: false,
     })
-    name: string,
+    Name: string,
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -62,17 +62,17 @@ export default class ProjectResolver {
     })
     Page: Pagination
   ) {
-    const projectss = await this.projectsService.getByProjectName(name, Page);
-    console.log(projectss);
-    return projectss as ProjectRef[];
+    const projects = await this.projectsService.getByProjectName(Name, Page);
+    console.log(projects);
+    return projects as ProjectRef[];
   }
 
   @Query((returns) => [ProjectRef])
-  async ProjectByTag(
-    @Arg("Tag", {
+  async ProjectByLanguage(
+    @Arg("Language", {
       nullable: false,
     })
-    Tag: string,
+    Language: string,
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -83,8 +83,11 @@ export default class ProjectResolver {
     })
     Page: Pagination
   ) {
-    const projectss = await this.projectsService.getByProjectTag(Tag, Page);
-    return projectss as ProjectRef[];
+    const projects = await this.projectsService.getByProjectLanguage(
+      Language,
+      Page
+    );
+    return projects as ProjectRef[];
   }
 
   @Mutation((returns) => ProjectRef)

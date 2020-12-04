@@ -24,6 +24,16 @@ export class Blog implements BlogI {
     nullable: false,
   })
   public tags!: string[];
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  sections!: string[];
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  content!: string[];
 }
 
 @InputType()
@@ -42,6 +52,16 @@ export class BlogRecord {
     nullable: false,
   })
   public tags!: string[];
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  sections!: string[];
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  content!: string[];
 }
 
 @ObjectType()

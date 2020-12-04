@@ -46,6 +46,11 @@ const Schema = {
           values: [],
         },
         {
+          name: "news_by_tag",
+          terms: ["tags"],
+          values: [],
+        },
+        {
           name: "all_news",
           terms: [],
           values: [],
@@ -61,7 +66,12 @@ const Schema = {
           values: [],
         },
         {
-          name: "all_blogs",
+          name: "projects_by_language",
+          terms: ["languages"],
+          values: [],
+        },
+        {
+          name: "all_projects",
           terms: [],
           values: [],
         },

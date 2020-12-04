@@ -6,6 +6,8 @@ type Client = faunadb.Client;
 export interface New {
   name: string;
   description: string;
+  link: string;
+  tags: string[];
 }
 
 export class NewContainer {
@@ -170,7 +172,7 @@ export class NewContainer {
 
   async getByNewsTag(tag: string, page: Pagination) {
     const response = await this.helper.SearchRecordInIndex(
-      "news_by_tags",
+      "news_by_tag",
       "news",
       [tag],
       {

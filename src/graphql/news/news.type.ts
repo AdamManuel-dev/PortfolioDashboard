@@ -19,6 +19,16 @@ export class News implements NewsI {
     nullable: false,
   })
   public description!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
+  link!: string;
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  tags!: string[];
 }
 
 @InputType()
@@ -32,6 +42,16 @@ export class NewsRecord {
     nullable: false,
   })
   public description!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
+  link!: string;
+
+  @Field((type) => [String], {
+    nullable: false,
+  })
+  tags!: string[];
 }
 
 @ObjectType()

@@ -48,10 +48,10 @@ export default class BlogResolver {
 
   @Query((returns) => [BlogRef])
   async BlogByName(
-    @Arg("name", {
+    @Arg("Name", {
       nullable: false,
     })
-    name: string,
+    Name: string,
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -62,7 +62,7 @@ export default class BlogResolver {
     })
     Page: Pagination
   ) {
-    const blogss = await this.blogsService.getByBlogName(name, Page);
+    const blogss = await this.blogsService.getByBlogName(Name, Page);
     console.log(blogss);
     return blogss as BlogRef[];
   }
@@ -98,21 +98,20 @@ export default class BlogResolver {
     return blogs as BlogRef;
   }
 
-  // DEBUG: This is erroring
-  // @Mutation((returns) => BlogRef)
-  // async ReplaceBlog(
-  //   @Arg("ID", {
-  //     nullable: false,
-  //   })
-  //   ID: string,
-  //   @Arg("Record", {
-  //     nullable: false,
-  //   })
-  //   Record: Blog
-  // ) {
-  //   const blogs = await this.blogsService.replaceBlog(ID, Record);
-  //   return blogs as BlogRef;
-  // }
+  @Mutation((returns) => BlogRef)
+  async ReplaceBlog(
+    @Arg("ID", {
+      nullable: false,
+    })
+    ID: string,
+    @Arg("Record", {
+      nullable: false,
+    })
+    Record: BlogRecord
+  ) {
+    const newss = await this.blogsService.replaceBlog(ID, Record);
+    return newss as BlogRef;
+  }
 
   @Mutation((returns) => BlogRef)
   async DeleteBlog(

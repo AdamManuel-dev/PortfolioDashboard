@@ -28,6 +28,11 @@ export class Resource implements ResourceI {
   @Field((type) => String, {
     nullable: false,
   })
+  link!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
   description!: string;
 
   @Field((type) => [String], {
@@ -52,6 +57,11 @@ export class ResourceRecord {
     nullable: false,
   })
   status!: string;
+
+  @Field((type) => String, {
+    nullable: false,
+  })
+  link!: string;
 
   @Field((type) => String, {
     nullable: false,

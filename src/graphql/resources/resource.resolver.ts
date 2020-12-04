@@ -53,10 +53,10 @@ export default class ResourceResolver {
 
   @Query((returns) => [ResourceRef])
   async ResourceByName(
-    @Arg("name", {
+    @Arg("Name", {
       nullable: false,
     })
-    name: string,
+    Name: string,
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -67,7 +67,7 @@ export default class ResourceResolver {
     })
     Page: Pagination
   ) {
-    const resources = await this.resourceService.getByResourceName(name, Page);
+    const resources = await this.resourceService.getByResourceName(Name, Page);
     console.log(resources);
     return resources as ResourceRef[];
   }

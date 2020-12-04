@@ -1,55 +1,86 @@
-<script>
-// your script goes here
+<script lang="ts">
+  // your script goes here
+  import {
+    Row,
+    Col,
+    TextField,
+    Icon,
+    Card,
+    CardTitle,
+    CardSubtitle,
+    CardActions,
+    CardText,
+    Button,
+  } from "svelte-materialify/src";
+
+  let firstPassword = "";
+  let email = "";
+  let showFirstPassword = false;
+
+  let passwordRules = [
+    (v: string) => !!v || "Required",
+    (v: string) => v.length <= 30 || "Max 25 characters",
+  ];
+
+  const login = () => {
+    alert(`${email}|${firstPassword}`);
+  };
 </script>
 
 <style>
-/* your styles go here */
+  /* your styles go here */
 </style>
 
-<div class="grid min-h-full place-items-center">
-  <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
-    <h1 class="text-xl font-semibold">
-      Welcome back John,
-      <span class="font-normal">sign in to continue</span>
-    </h1>
-    <form class="mt-6">
-      <label
-        for="email"
-        class="block text-xs font-semibold text-gray-600 uppercase"
-      >E-mail</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        placeholder="john.doe@company.com"
-        autocomplete="email"
-        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-        required
-      />
-      <label
-        for="password"
-        class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-      >Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        placeholder="********"
-        autocomplete="current-password"
-        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-        required
-      />
-      <button
-        type="submit"
-        class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
-      >
-        Sign in
-      </button>
-      <p
-        class="flex justify-between inline-block mt-4 text-xs text-gray-500 cursor-pointer hover:text-black"
-      >
-        Forgot password?
-      </p>
-    </form>
+<div class="grid min-h-full place-items-center text--primary">
+  <div class="w-11/12 p-12 sm:w-8/12 md:w-1/2 lg:w-5/12">
+    <Card>
+      <CardSubtitle>Please login to continue</CardSubtitle>
+      <CardText>
+        <TextField outlined bind:value="{email}" counter="{100}" type="email">
+          Email
+        </TextField>
+        <TextField
+          counter="{30}"
+          type="{showFirstPassword ? 'text' : 'password'}"
+          rules="{passwordRules}"
+          bind:value="{firstPassword}"
+        >
+          Password
+          <div
+            slot="append"
+            on:click="{() => {
+              showFirstPassword = !showFirstPassword;
+            }}"
+          >
+            <Icon class="mdi mdi-{showFirstPassword ? 'eye-off' : 'eye'}" />
+          </div>
+        </TextField>
+      </CardText>
+      <CardActions>
+        <div class="flex flex-row justify-around w-full">
+          <a href="/signup">
+            <Button
+              rounded
+              depressed
+              class="secondary-text"
+              size="large"
+              style="outline-width: 0px;"
+            >
+              Signup?
+            </Button>
+          </a>
+          <Button
+            rounded
+            depressed
+            class="primary-text"
+            size="large"
+            style="outline-width: 0px;"
+            on:click="{login}"
+          >
+            Login
+          </Button>
+        </div>
+      </CardActions>
+    </Card>
   </div>
 </div>

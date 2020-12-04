@@ -18,7 +18,7 @@ export default class NewsResolver {
   constructor(private readonly newssService: NewContainer) {}
 
   @Query((returns) => [NewsRef])
-  async Newss(
+  async News(
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -33,7 +33,7 @@ export default class NewsResolver {
   }
 
   @Query((returns) => NewsRef)
-  async News(
+  async NewsStory(
     @Arg("ID", {
       nullable: false,
     })
@@ -48,10 +48,10 @@ export default class NewsResolver {
 
   @Query((returns) => [NewsRef])
   async NewsByName(
-    @Arg("name", {
+    @Arg("Name", {
       nullable: false,
     })
-    name: string,
+    Name: string,
     @Arg("Page", {
       nullable: true,
       defaultValue: {
@@ -62,7 +62,7 @@ export default class NewsResolver {
     })
     Page: Pagination
   ) {
-    const newsss = await this.newssService.getByNewsName(name, Page);
+    const newsss = await this.newssService.getByNewsName(Name, Page);
     console.log(newsss);
     return newsss as NewsRef[];
   }

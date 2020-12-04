@@ -1,13 +1,13 @@
 <script lang="ts">
-import ExampleComponent from "../components/ExampleComponent.svelte";
+  import ExampleComponent from "../components/ExampleComponent.svelte";
 
-import { Button, Card, CardText, CardActions } from "svelte-materialify";
+  import { Button, Card, CardText, CardActions } from "svelte-materialify";
 </script>
 
 <style>
-.centerer {
-  @apply flex-1 flex flex-col items-center justify-center;
-}
+  .centerer {
+    @apply flex-1 flex flex-col items-center justify-center;
+  }
 </style>
 
 <div class:centerer="{true}">

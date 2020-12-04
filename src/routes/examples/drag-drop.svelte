@@ -1,29 +1,29 @@
 <script>
-import { flip } from "svelte/animate";
-import { dndzone } from "svelte-dnd-action";
-import {
-  Card,
-  CardTitle,
-  CardSubtitle,
-  CardActions,
-  Button,
-  Row,
-  Col,
-} from "svelte-materialify/src";
+  import { flip } from "svelte/animate";
+  import { dndzone } from "svelte-dnd-action";
+  import {
+    Card,
+    CardTitle,
+    CardSubtitle,
+    CardActions,
+    Button,
+    Row,
+    Col,
+  } from "svelte-materialify/src";
 
-let items = [
-  { id: 1, name: "Tuba Angel", author: "Иοκτцяηаι", color: "blue" },
-  { id: 2, name: "Tuba Mech", author: "Noah Giesler", color: "red" },
-  { id: 3, name: "Tuba Archmage", author: "Noah Giesler", color: "green" },
-];
+  let items = [
+    { id: 1, name: "Tuba Angel", author: "Иοκτцяηаι", color: "blue" },
+    { id: 2, name: "Tuba Mech", author: "Noah Giesler", color: "red" },
+    { id: 3, name: "Tuba Archmage", author: "Noah Giesler", color: "green" },
+  ];
 
-const flipDurationMs = 300;
-function handleDndConsider(e: any) {
-  items = e.detail.items;
-}
-function handleDndFinalize(e: any) {
-  items = e.detail.items;
-}
+  const flipDurationMs = 300;
+  function handleDndConsider(e: any) {
+    items = e.detail.items;
+  }
+  function handleDndFinalize(e: any) {
+    items = e.detail.items;
+  }
 </script>
 
 <div class="justify-center p-8 d-flex">

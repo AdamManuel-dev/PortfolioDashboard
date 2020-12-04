@@ -174,11 +174,11 @@ export class ProjectContainer {
     return toReturn;
   }
 
-  async getByProjectTag(tag: string, page: Pagination) {
+  async getByProjectLanguage(language: string, page: Pagination) {
     const response = await this.helper.SearchRecordInIndex(
-      "projects_by_tags",
+      "projects_by_language",
       "projects",
-      [tag],
+      [language],
       {
         pageSize:
           page.after === null

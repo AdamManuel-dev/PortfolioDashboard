@@ -6,8 +6,45 @@ type Client = faunadb.Client;
 export interface Resource {
   name: string;
   description: string;
+  link: string;
   tags: string[];
   status: string;
+}
+
+export function createPageOptions(page: Pagination) {
+  return {
+    pageSize:
+      page.after === null
+        ? Number.parseInt(page.count) + 1
+        : Number.parseInt(page.count),
+    ...(page.after
+      ? {
+          after: page.after,
+        }
+      : {}),
+    ...(page.before
+      ? {
+          before: page.before,
+        }
+      : {}),
+  };
+}
+
+function dereference(response: any) {
+  return {
+    ...response,
+    ref: response.ref.toString(),
+  };
+}
+
+function dereferenceList(responses: any[], page: Pagination) {
+  const toReturn = ((responses as any[]) || []).map((rec: any) =>
+    dereference(rec)
+  );
+  if (page && page.after) {
+    toReturn.shift();
+  }
+  return toReturn;
 }
 
 export class ResourceContainer {
@@ -32,14 +69,21 @@ export class ResourceContainer {
     this.helper = h;
   }
 
-  async getResource(id: string) {
+  async getResource(id: string, preserveRef: boolean = false) {
     const record = await this.helper.GetRecordInCollection<{
       ref: any;
       data: Resource;
       ts: number;
     }>("resources", id);
-    console.log(record);
-    return record;
+    if (this.dev) {
+      console.log("=== Found Record ===");
+      console.log(record);
+    }
+    if (preserveRef) {
+      return record;
+    } else {
+      return dereference(record);
+    }
   }
 
   async createResource(resource: Resource, preserveRef: boolean = false) {
@@ -55,14 +99,15 @@ export class ResourceContainer {
     if (preserveRef) {
       return newRecord;
     } else {
-      return {
-        ...newRecord,
-        ref: newRecord.ref.toString(),
-      } as { ref: any; data: Resource; ts: number };
+      return dereference(newRecord);
     }
   }
 
-  async updateResource(id: string, update: Partial<Resource>) {
+  async updateResource(
+    id: string,
+    update: Partial<Resource>,
+    preserveRef: boolean = false
+  ) {
     const recordUpdate = await this.helper.UpdateRecord<Partial<Resource>>(
       "resources",
       id,
@@ -72,10 +117,18 @@ export class ResourceContainer {
       console.log("=== Record Updated ===");
       console.log(recordUpdate);
     }
-    return recordUpdate;
+    if (preserveRef) {
+      return recordUpdate;
+    } else {
+      return dereference(recordUpdate);
+    }
   }
 
-  async replaceResource(id: string, replacement: Resource) {
+  async replaceResource(
+    id: string,
+    replacement: Resource,
+    preserveRef: boolean = false
+  ) {
     const recordReplace = (await this.helper.ReplaceRecord<Resource>(
       "resources",
       id,
@@ -85,126 +138,76 @@ export class ResourceContainer {
       console.log("=== Record Replaced ===");
       console.log(recordReplace);
     }
-    return {
-      ...recordReplace,
-      ref: recordReplace.ref.toString(),
-    };
+    if (preserveRef) {
+      return recordReplace;
+    } else {
+      return dereference(recordReplace);
+    }
   }
 
-  async deleteResource(id: string) {
+  async deleteResource(id: string, preserveRef: boolean = false) {
     const response = (await this.helper.DeleteRecord("resources", id)) as any;
     if (this.dev) {
       console.log("=== Record Deleted ===");
       console.log(response);
     }
-    return {
-      ...response,
-      ref: response.ref.toString(),
-    };
+    if (preserveRef) {
+      return response;
+    } else {
+      return dereference(response);
+    }
   }
 
-  async listResources(page: Pagination) {
+  async listResources(page: Pagination, preserveRef: boolean = false) {
     const response = await this.helper.ListRecordInIndex(
       "all_resources",
       "resources",
-      {
-        pageSize:
-          page.after === null
-            ? Number.parseInt(page.count) + 1
-            : Number.parseInt(page.count),
-        ...(page.after
-          ? {
-              after: page.after,
-            }
-          : {}),
-        ...(page.before
-          ? {
-              before: page.before,
-            }
-          : {}),
-      }
+      createPageOptions(page)
     );
     if (this.dev) {
       console.log("=== List Records ===");
       console.log(response);
     }
-    const toReturn = ((response as any[]) || []).map((rec: any) => {
-      return {
-        ...rec,
-        ref: rec.ref.toString(),
-      };
-    });
-    if (page.after) {
-      toReturn.shift();
+    if (preserveRef) {
+      return response;
+    } else {
+      return dereferenceList(response as any[], page);
     }
-    return toReturn;
   }
 
-  async getByResourceName(name: string, page: Pagination) {
+  async getByResourceName(
+    name: string,
+    page: Pagination,
+    preserveRef: boolean = false
+  ) {
     const response = await this.helper.SearchRecordInIndex(
       "resources_by_name",
       "resources",
       [name],
-      {
-        pageSize:
-          page && page.after === null
-            ? Number.parseInt(page.count) + 1
-            : Number.parseInt(page.count),
-        ...(page.after
-          ? {
-              after: page.after,
-            }
-          : {}),
-        ...(page.before
-          ? {
-              before: page.before,
-            }
-          : {}),
-      }
+      createPageOptions(page)
     );
-    const toReturn = ((response as any[]) || []).map((rec: any) => {
-      return {
-        ...rec,
-        ref: rec.ref.toString(),
-      };
-    });
-    if (page && page.after) {
-      toReturn.shift();
+    if (preserveRef) {
+      return response;
+    } else {
+      return dereferenceList(response as any[], page);
     }
-    return toReturn;
   }
 
-  async getByResourceTag(tag: string, page: Pagination) {
+  async getByResourceTag(
+    tag: string,
+    page: Pagination,
+    preserveRef: boolean = false
+  ) {
     const response = await this.helper.SearchRecordInIndex(
       "resources_by_tags",
       "resources",
       [tag],
-      {
-        pageSize:
-          page.after === null
-            ? Number.parseInt(page.count) + 1
-            : Number.parseInt(page.count),
-        ...(page.after
-          ? {
-              after: page.after,
-            }
-          : {}),
-        ...(page.before
-          ? {
-              before: page.before,
-            }
-          : {}),
-      }
+      createPageOptions(page)
     );
-    const toReturn = ((response as any[]) || []).map((rec: any) => {
-      return {
-        ...rec,
-        ref: rec.ref.toString(),
-      };
-    });
-    if (page && page.after) {
-      toReturn.shift();
+    if (preserveRef) {
+      return response;
+    } else {
+      return dereferenceList(response as any[], page);
     }
-    return toReturn;
   }
 }

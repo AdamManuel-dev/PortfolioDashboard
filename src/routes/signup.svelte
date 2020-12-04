@@ -1,100 +1,134 @@
-<script>
-// your script goes here
+<script lang="ts">
+  // your script goes here
+  import {
+    Row,
+    Col,
+    TextField,
+    Icon,
+    Card,
+    CardTitle,
+    CardSubtitle,
+    CardActions,
+    CardText,
+    Button,
+  } from "svelte-materialify/src";
+
+  let firstPassword = "";
+  let secondPassword = "";
+  let firstName = "";
+  let lastName = "";
+  let email = "";
+  let showFirstPassword = false;
+  let showSecondPassword = false;
+
+  let passwordRules = [
+    (v: string) => !!v || "Required",
+    (v: string) => v.length <= 30 || "Max 25 characters",
+    (v: string) =>
+      secondPassword.includes(firstPassword) || "Passwords Missmatch",
+  ];
+
+  const signup = () => {
+    alert(
+      [firstName, lastName, email, firstPassword, secondPassword].join(", ")
+    );
+  };
 </script>
 
 <style>
-/* your styles go here */
+  /* your styles go here */
 </style>
 
-<div class="grid min-h-full place-items-center">
-  <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
-    <h1 class="text-xl font-semibold">
-      Hello there 👋,
-      <span class="font-normal">please fill in your information to continue</span>
-    </h1>
-    <form class="mt-6">
-      <div class="flex justify-between gap-3">
-        <span class="w-1/2">
-          <label
-            for="firstname"
-            class="block text-xs font-semibold text-gray-600 uppercase"
-          >Firstname</label>
-          <input
-            id="firstname"
-            type="text"
-            name="firstname"
-            placeholder="John"
-            autocomplete="given-name"
-            class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            required
-          />
-        </span>
-        <span class="w-1/2">
-          <label
-            for="lastname"
-            class="block text-xs font-semibold text-gray-600 uppercase"
-          >Lastname</label>
-          <input
-            id="lastname"
-            type="text"
-            name="lastname"
-            placeholder="Doe"
-            autocomplete="family-name"
-            class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            required
-          />
-        </span>
-      </div>
-      <label
-        for="email"
-        class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-      >E-mail</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        placeholder="john.doe@company.com"
-        autocomplete="email"
-        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-        required
-      />
-      <label
-        for="password"
-        class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-      >Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        placeholder="********"
-        autocomplete="new-password"
-        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-        required
-      />
-      <label
-        for="password-confirm"
-        class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
-      >Confirm password</label>
-      <input
-        id="password-confirm"
-        type="password"
-        name="password-confirm"
-        placeholder="********"
-        autocomplete="new-password"
-        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-        required
-      />
-      <button
-        type="submit"
-        class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
-      >
-        Sign up
-      </button>
-      <p
-        class="flex justify-between inline-block mt-4 text-xs text-gray-500 cursor-pointer hover:text-black"
-      >
-        Already registered?
-      </p>
-    </form>
+<div class="grid min-h-full place-items-center text--primary">
+  <div class="w-11/12 p-12 sm:w-8/12 md:w-1/2 lg:w-5/12">
+    <Card>
+      <CardTitle>Hello there 👋,</CardTitle>
+      <CardSubtitle>please fill in your information to continue</CardSubtitle>
+      <CardText>
+        <div class="flex justify-between gap-3">
+          <span class="w-1/2">
+            <TextField
+              outlined
+              bind:value="{firstName}"
+              counter="{50}"
+              type="given-name"
+            >
+              Firstname
+            </TextField>
+          </span>
+          <span class="w-1/2">
+            <TextField
+              outlined
+              bind:value="{lastName}"
+              counter="{50}"
+              type="family-name"
+            >
+              Lastname
+            </TextField>
+          </span>
+        </div>
+        form
+        <TextField outlined bind:value="{email}" counter="{100}" type="email">
+          Email
+        </TextField>
+        <TextField
+          counter="{30}"
+          type="{showFirstPassword ? 'text' : 'password'}"
+          rules="{passwordRules}"
+          bind:value="{firstPassword}"
+        >
+          Password
+          <div
+            slot="append"
+            on:click="{() => {
+              showFirstPassword = !showFirstPassword;
+            }}"
+          >
+            <Icon class="mdi mdi-{showFirstPassword ? 'eye-off' : 'eye'}" />
+          </div>
+        </TextField>
+        <TextField
+          counter="{30}"
+          type="{showSecondPassword ? 'text' : 'password'}"
+          rules="{passwordRules}"
+          bind:value="{secondPassword}"
+        >
+          Confirm Password
+          <div
+            slot="append"
+            on:click="{() => {
+              showSecondPassword = !showSecondPassword;
+            }}"
+          >
+            <Icon class="mdi mdi-{showSecondPassword ? 'eye-off' : 'eye'}" />
+          </div>
+        </TextField>
+      </CardText>
+      <CardActions>
+        <div class="flex flex-row justify-around w-full">
+          <a href="/login">
+            <Button
+              rounded
+              depressed
+              class="secondary-text"
+              size="large"
+              style="outline-width: 0px;"
+            >
+              Already registered?
+            </Button>
+          </a>
+          <Button
+            rounded
+            depressed
+            class="primary-text"
+            size="large"
+            style="outline-width: 0px;"
+            on:click="{signup}"
+          >
+            Sign up
+          </Button>
+        </div>
+      </CardActions>
+    </Card>
   </div>
 </div>

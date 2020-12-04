@@ -8,6 +8,8 @@ export interface Blog {
   name: string;
   tags: string[];
   description: string;
+  sections: string[];
+  content: string[];
 }
 
 export class BlogContainer {
