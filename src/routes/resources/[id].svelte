@@ -36,7 +36,6 @@
 </script>
 
 <script lang="ts">
-  import type { Resource } from "src/graphql/resources/resource.type";
   import { headers, url, gql } from "../services/graph";
   import {
     Card,
@@ -73,12 +72,12 @@
     active = !active;
   }
 
-  export let route: {
-    host: string;
-    path: string;
-    query: {};
-    params: { id: string };
-  };
+  // export let route: {
+  //   host: string;
+  //   path: string;
+  //   query: {};
+  //   params: { id: string };
+  // };
 </script>
 
 <style>

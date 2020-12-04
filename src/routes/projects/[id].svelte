@@ -1,15 +1,53 @@
 <script context="module">
-  export async function preload(route: {
-    host: string;
-    path: string;
-    query: {};
-    params: { id: string };
-  }) {
-    return { route };
+  export async function preload(
+    this: any,
+    route: {
+      host: string;
+      path: string;
+      query: {};
+      params: { id: string };
+    }
+  ) {
+    const response = await this.fetch(url, {
+      method: "POST",
+      headers,
+      body: gql`
+        {
+          Project(ID: "${route.params.id}") {
+            ref
+            ts
+            data {
+              name
+              languages
+              status
+              description
+            }
+          }
+        }
+      `,
+    });
+    return {
+      project: await response.json(),
+      route,
+    };
   }
 </script>
 
 <script lang="ts">
+  import { headers, url, gql } from "../services/graph";
+  import {
+    Card,
+    CardTitle,
+    CardSubtitle,
+    CardActions,
+    Button,
+    Icon,
+    Divider,
+  } from "svelte-materialify/src";
+  import Chip from "svelte-materialify/src/components/Chip/Chip.svelte";
+
+  import { slide } from "svelte/transition";
+
   export let route: {
     host: string;
     path: string;
@@ -17,24 +55,31 @@
     params: { id: string };
   };
 
-  interface ListProjectResponse {
+  export let project: {
     data: {
-        Projects: {
-          ref: string;
-          ts: number;
-          data: {
-            name: string;
-            languages: string[];
-            status: string;
-            description: string;
-          };
-        }[];
+      Project: {
+        ref: string;
+        ts: number;
+        data: {
+          name: string;
+          languages: string[];
+          status: string;
+          description: string;
+        };
       };
-    }
+    };
+  };
 </script>
 
 <style>
   /* your styles go here */
 </style>
 
-<h1>{route.params.id}</h1>
+
+<pre>
+  {JSON.stringify(route, undefined, 2)}
+</pre>
+
+<pre>
+  {JSON.stringify(project, undefined, 2)}
+</pre>

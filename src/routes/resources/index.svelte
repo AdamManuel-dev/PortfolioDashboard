@@ -65,17 +65,21 @@
 </script>
 
 <style>
-  /* your styles go here */
+  .container {
+    @apply flex flex-row flex-wrap items-center justify-center p-3 overflow-auto;
+  }
+
+  .title-container {
+    @apply w-full mb-4 text-center;
+  }
 </style>
 
-<div
-  class="flex flex-row flex-wrap items-center justify-center m-3 overflow-auto"
->
-  <div class="w-full mb-4 text-center">
-    <h1 class="text--secondary">Reference Resources</h1>
+<div class:container="{true}">
+  <div class:title-container="{true}">
+    <h2 class="text--secondary">Reference Resources</h2>
   </div>
   {#each resources.data.Resources as resource}
-    <a href="{'/resources/' + getIDFromRef(resource.ref)}" class="w-full">
+    <a href="{'/resources/' + getIDFromRef(resource.ref)}" class="w-full mt-2">
       <Card outlined hover>
         <CardText>
           <div class="text--secondary">{resource.data.status}</div>

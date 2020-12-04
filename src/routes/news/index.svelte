@@ -69,17 +69,21 @@
 </script>
 
 <style>
-  /* your styles go here */
+  .container {
+    @apply flex flex-row flex-wrap items-center justify-center p-3 overflow-auto;
+  }
+
+  .title-container {
+    @apply w-full mb-4 text-center;
+  }
 </style>
 
-<div
-  class="flex flex-row flex-wrap items-center justify-center p-3 overflow-auto"
->
-  <div class="w-full text-center">
-    <h1 class="text--secondary">Articles</h1>
+<div class:container="{true}">
+  <div class:title-container="{true}">
+    <h2 class="text--secondary">Articles</h2>
   </div>
   {#each resources.data.News as story}
-    <a href="{'/news/' + getIDFromRef(story.ref)}" class="w-full">
+    <a href="{'/news/' + getIDFromRef(story.ref)}" class="w-full mt-2">
       <Card outlined hover>
         <CardText>
           <div class="text--secondary">{story.data.description}</div>

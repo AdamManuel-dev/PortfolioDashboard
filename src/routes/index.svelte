@@ -11,136 +11,267 @@
 </style>
 
 <div class:centerer="{true}">
-  <ExampleComponent
-    title="🌐 Adam's Opinionated Sapper Template"
-    paragraph="This is an example route and component to make sure everything's working. Please continue developing!"
-  />
+  
   <!-- Here's how you could extract conditional class groups with @apply -->
   <!-- This is an example component -->
-  <div class="py-5">
-    <main class="h-full overflow-y-auto">
-      <div class="container grid mx-auto">
-        <!-- Cards -->
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-          <!-- Card -->
+  <div class="py-5 border border-gray-300 border-solid rounded shadow mx-4 w-full">
+    <ExampleComponent
+    title="Portfolio Dashboard"
+    paragraph="This is where you edit the content of your portfolio site using this custom CMS system!"
+  />
+    <div class="container grid">
+      <!-- Cards -->
+      <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
+        <!-- Card -->
+        <div
+          class="flex items-center p-4  rounded-lg shadow-xs dark:bg-gray-800"
+        >
           <div
-            class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
           >
-            <div
-              class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
-            >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p
-                class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-              >
-                My Blog Posts
-              </p>
-              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                10
-              </p>
-            </div>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+              ></path>
+            </svg>
           </div>
-          <!-- Card -->
-          <div
-            class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-          >
-            <div
-              class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p
-                class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-              >
-                My Forum Posts
-              </p>
-              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                24
-              </p>
-            </div>
+              Blogs Posted
+            </p>
+            <p class="text-lg font-semibold text-gray-500 dark:text-gray-200">
+              10
+            </p>
           </div>
-          <!-- Card -->
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 rounded-lg shadow-xs dark:bg-gray-800"
+        >
           <div
-            class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
           >
-            <div
-              class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
-            >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p
-                class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-              >
-                My Tutorials
-              </p>
-              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                376
-              </p>
-            </div>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
           </div>
-          <!-- Card -->
-          <div
-            class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-          >
-            <div
-              class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p
-                class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-              >
-                My Purchases
-              </p>
-              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                35
-              </p>
-            </div>
+              Important News
+            </p>
+            <p class="text-lg font-semibold text-gray-500 dark:text-gray-200">
+              24
+            </p>
+          </div>
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Learning Resources
+            </p>
+            <p class="text-lg font-semibold text-gray-500 dark:text-gray-200">
+              376
+            </p>
+          </div>
+        </div>
+        <!-- Card -->
+        <div
+          class="flex items-center p-4 rounded-lg shadow-xs dark:bg-gray-800"
+        >
+          <div
+            class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+            >
+              Public Projects
+            </p>
+            <p class="text-lg font-semibold text-gray-500 dark:text-gray-200">
+              35
+            </p>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   </div>
-  <div class="justify-center mt-4 mb-4 d-flex">
-    <Card outlined style="max-width:300px;">
-      <div class="pt-3 pl-4 pr-4">
-        <span class="text-overline"> OVERLINE </span>
-        <br />
-        <span class="mb-2 text-h5">Headline</span>
-        <br />
+  <main class="w-full">
+    <section class="m-4 border border-gray-300 border-solid rounded shadow">
+      <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+        Buildings Overview
+      </header>
+      <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
+        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
+          <span class="text-xs font-medium text-gray-500 uppercase">TOTAL REVENUE</span>
+          <div class="py-4 flex items-center justify-center text-center">
+            <span class="mr-4 text-3xl">$485,985</span>
+            <span class="inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs">+9.1%</span>
+          </div>
+        </div>
+        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
+          <span class="text-xs font-medium text-gray-500 uppercase">PREDICTED MONTHLY REVENUE</span>
+          <div class="py-4 flex items-center justify-center text-center">
+            <span class="mr-4 text-3xl">$6,576</span>
+            <span class="inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs">+12.0%</span>
+          </div>
+        </div>
+        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
+          <span class="text-xs font-medium text-gray-500 uppercase">ACTIVE RENTERS</span>
+          <div class="py-4 flex items-center justify-center text-center">
+            <span class="mr-4 text-3xl">152</span>
+            <span class="inline-flex items-center bg-red-500 h-6 px-2 rounded text-white text-xs">-12</span>
+          </div>
+        </div>
+        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r flex flex-col items-center">
+          <span class="text-xs font-medium text-gray-500 uppercase">PENDING RENTS</span>
+          <span class="block py-4 text-3xl">$930,10</span>
+
+        </div>
+      </section>
+      <section id="chart" class="p-4">
+        <pre style="width: 100%; height: 200px; background:gray;"> 
+          CHART HERE
+        </pre>
+      </section>
+    </section>
+
+    <div class="flex flex-wrap flex-row">
+      <div class="w-full lg:w-1/2">
+        <section class="m-4 border border-gray-300 border-solid rounded shadow">
+          <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+            Most Profitable Renters
+          </header>
+          <section class="overflow-x-auto w-full">
+            <table class="w-full" cellpadding="0" cellspacing="0" border="0">
+              <tbody>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-red-600 rounded-full block flex  flex-row justify-center items-center text-white">A</div>
+                      <div class="text-gray-500">Adobe</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-green-600 rounded-full block flex  flex-row justify-center items-center text-white">B</div>
+                      <div class="text-gray-500">Bank of America</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$11,456.84</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-blue-600 rounded-full block flex  flex-row justify-center items-center text-white">L</div>
+                      <div class="text-gray-500">Lamborghini Automobili</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-yellow-600 rounded-full block flex  flex-row justify-center items-center text-white">G</div>
+                      <div class="text-gray-500">Google London</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$9,586.11</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
       </div>
-      <CardText>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit,
-        qui quaerat rerum incidunt nisi ducimus?
-      </CardText>
-      <CardActions>
-        <Button rounded outlined>Button</Button>
-      </CardActions>
-    </Card>
-  </div>
+      <div class="w-full lg:w-1/2">
+        <section class="m-4 border border-gray-300 border-solid rounded shadow">
+          <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+            Latest Invoices
+          </header>
+          <section class="overflow-x-auto w-full">
+            <table class="w-full" cellpadding="0" cellspacing="0" border="0">
+              <tbody>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-red-600 rounded-full block flex  flex-row justify-center items-center text-white">A</div>
+                      <div class="text-gray-500">Adobe</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-green-600 rounded-full block flex  flex-row justify-center items-center text-white">B</div>
+                      <div class="text-gray-500">Bank of America</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$11,456.84</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-blue-600 rounded-full block flex  flex-row justify-center items-center text-white">L</div>
+                      <div class="text-gray-500">Lamborghini Automobili</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                </tr>
+                <tr>
+                  <td class="p-2 py-4 border-b border-solid border-gray-300">
+                    <div class="pl-4 flex flex-wrap flex-row items-center">
+                      <div class="mr-4 h-12 w-12 bg-yellow-600 rounded-full block flex  flex-row justify-center items-center text-white">G</div>
+                      <div class="text-gray-500">Google London</div>
+                    </div>
+
+                  </td>
+                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$9,586.11</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+      </div>
+    </div>
+	</main>
 </div>
