@@ -9,7 +9,7 @@ export interface Blog {
   tags: string[];
   description: string;
   sections: string[];
-  content: string[];
+  content: string;
 }
 
 export class BlogContainer {

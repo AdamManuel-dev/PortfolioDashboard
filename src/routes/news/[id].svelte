@@ -35,28 +35,12 @@
 
 <script lang="ts">
   import { headers, url, gql } from "../services/graph";
-  import {
-    Card,
-    CardTitle,
-    CardSubtitle,
-    CardActions,
-    Button,
-    Icon,
-    Divider,
-  } from "svelte-materialify/src";
-  import Chip from "svelte-materialify/src/components/Chip/Chip.svelte";
-
-  import { slide } from "svelte/transition";
-  export let route: {
-    host: string;
-    path: string;
-    query: {};
-    params: { id: string };
-  };
+  import { ChipInput } from "../../components";
+  import { Button, TextField } from "svelte-materialify/src";
 
   export let story: {
     data: {
-      New: {
+      NewsStory: {
         ref: string;
         ts: number;
         data: {
@@ -68,16 +52,48 @@
       };
     };
   };
+
+  console.log(story);
+
+  let name = story.data.NewsStory.data.name;
+  let description = story.data.NewsStory.data.description;
+  let link = story.data.NewsStory.data.link;
+  let tags = story.data.NewsStory.data.tags;
 </script>
 
-<style>
-  /* your styles go here */
-</style>
-
-<pre>
-  {JSON.stringify(route, undefined, 2)}
-</pre>
-
-<pre>
-  {JSON.stringify(story, undefined, 2)}
-</pre>
+<div
+  class="flex flex-row flex-wrap items-center justify-between w-full p-3 border border-gray-500 rounded-md"
+>
+  <div class="flex flex-col w-full p-2">
+    <div class="flex flex-row items-center justify-between">
+      <a href="/news">
+        <Button>Cancel</Button>
+      </a>
+      <Button
+        class="text-white green"
+        on:click="{() => {
+          alert('Save');
+        }}"
+      >
+        Save
+      </Button>
+    </div>
+    <h2>News Story Editor</h2>
+  </div>
+  <div class="w-full">
+    <TextField outlined bind:value="{name}">Title</TextField>
+  </div>
+  <div class="w-full">
+    <TextField outlined bind:value="{description}">Description</TextField>
+  </div>
+  <div class="w-full">
+    <TextField outlined bind:value="{link}">Link</TextField>
+  </div>
+  <ChipInput
+    placeholder="Tag"
+    chips="{tags}"
+    on:value="{({ detail }) => {
+      tags = detail;
+    }}"
+  />
+</div>

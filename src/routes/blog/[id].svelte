@@ -36,24 +36,8 @@
 
 <script lang="ts">
   import { headers, url, gql } from "../services/graph";
-  import {
-    Card,
-    CardTitle,
-    CardSubtitle,
-    CardActions,
-    Button,
-    Icon,
-    Divider,
-  } from "svelte-materialify/src";
-  import Chip from "svelte-materialify/src/components/Chip/Chip.svelte";
-
-  import { slide } from "svelte/transition";
-  export let route: {
-    host: string;
-    path: string;
-    query: {};
-    params: { id: string };
-  };
+  import { MarkdownEditor, ChipInput } from "../../components";
+  import { Button, TextField } from "svelte-materialify/src";
 
   export let blog: {
     data: {
@@ -62,26 +46,61 @@
         ts: number;
         data: {
           name: string;
-          languages: string[];
-          status: string;
           description: string;
           tags: string[];
-          link: string;
+          sections: string[];
+          content: string;
         };
-      }[];
+      };
     };
   };
+
+  let preview = false;
+  let name = blog.data.Blog.data.name;
+  let description = blog.data.Blog.data.description;
+  let content = blog.data.Blog.data.content;
+  let tags = blog.data.Blog.data.tags;
+  let sections = blog.data.Blog.data.sections;
 </script>
 
-<style>
-  /* your styles go here */
-</style>
-
-
-<pre>
-  {JSON.stringify(route, undefined, 2)}
-</pre>
-
-<pre>
-  {JSON.stringify(blog, undefined, 2)}
-</pre>
+<div
+  class="flex flex-row flex-wrap items-center justify-between w-full p-3 border border-gray-500 rounded-md"
+>
+  <div class="flex flex-col w-full p-2">
+    <div class="flex flex-row items-center justify-between">
+      <a href="/blog">
+        <Button>Cancel</Button>
+      </a>
+      <Button
+        class="text-white green"
+        on:click="{() => {
+          alert('Save');
+        }}"
+      >
+        Save
+      </Button>
+    </div>
+    <h2>Blog Editor</h2>
+  </div>
+  <div class="w-full">
+    <TextField outlined bind:value="{name}">Title</TextField>
+  </div>
+  <div class="w-full">
+    <TextField outlined bind:value="{description}">Description</TextField>
+  </div>
+  <ChipInput
+    placeholder="Tag"
+    chips="{tags}"
+    on:value="{({ detail }) => {
+      tags = detail;
+    }}"
+  />
+  <ChipInput
+    placeholder="Section"
+    chips="{sections}"
+    on:value="{({ detail }) => {
+      sections = detail;
+    }}"
+  />
+  <MarkdownEditor bind:content />
+</div>

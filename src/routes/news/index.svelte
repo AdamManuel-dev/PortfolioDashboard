@@ -34,13 +34,7 @@
 </script>
 
 <script lang="ts">
-  import {
-    gql,
-    headers,
-    url,
-    getIDFromRef,
-    dereference,
-  } from "../services/graph";
+  import { gql, headers, url, getIDFromRef } from "../services/graph";
 
   import { Card, CardText, CardActions, Button } from "svelte-materialify/src";
   import Chip from "svelte-materialify/src/components/Chip/Chip.svelte";

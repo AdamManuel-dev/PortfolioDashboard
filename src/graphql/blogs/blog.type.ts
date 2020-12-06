@@ -30,10 +30,10 @@ export class Blog implements BlogI {
   })
   sections!: string[];
 
-  @Field((type) => [String], {
+  @Field((type) => String, {
     nullable: false,
   })
-  content!: string[];
+  content!: string;
 }
 
 @InputType()
@@ -58,10 +58,10 @@ export class BlogRecord {
   })
   sections!: string[];
 
-  @Field((type) => [String], {
+  @Field((type) => String, {
     nullable: false,
   })
-  content!: string[];
+  content!: string;
 }
 
 @ObjectType()

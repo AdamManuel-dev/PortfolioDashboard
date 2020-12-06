@@ -1,7 +1,5 @@
 <script lang="ts">
   import ExampleComponent from "../components/ExampleComponent.svelte";
-
-  import { Button, Card, CardText, CardActions } from "svelte-materialify";
 </script>
 
 <style>
@@ -11,20 +9,19 @@
 </style>
 
 <div class:centerer="{true}">
-  
   <!-- Here's how you could extract conditional class groups with @apply -->
   <!-- This is an example component -->
-  <div class="py-5 border border-gray-300 border-solid rounded shadow mx-4 w-full">
+  <div class="w-full p-4 mx-4">
     <ExampleComponent
-    title="Portfolio Dashboard"
-    paragraph="This is where you edit the content of your portfolio site using this custom CMS system!"
-  />
-    <div class="container grid">
+      title="Portfolio Dashboard"
+      paragraph="This is where you edit the content of your portfolio site using this custom CMS system!"
+    />
+    <div class="grid m-4 ">
       <!-- Cards -->
       <div class="grid gap-6 mb-3 md:grid-cols-2 xl:grid-cols-4">
         <!-- Card -->
         <div
-          class="flex items-center p-4  rounded-lg shadow-xs dark:bg-gray-800"
+          class="flex items-center p-4 rounded-lg shadow-xs dark:bg-gray-800"
         >
           <div
             class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
@@ -126,93 +123,146 @@
     </div>
   </div>
   <main class="w-full">
-    <section class="m-4 border border-gray-300 border-solid rounded shadow">
-      <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+    <section class="m-4 border border-gray-500 border-solid rounded shadow">
+      <header
+        class="p-4 text-lg font-medium border-b border-gray-500 border-solid"
+      >
         Buildings Overview
       </header>
-      <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
-        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
-          <span class="text-xs font-medium text-gray-500 uppercase">TOTAL REVENUE</span>
-          <div class="py-4 flex items-center justify-center text-center">
+      <section
+        class="flex flex-row flex-wrap items-center text-center border-b border-gray-500 border-solid "
+      >
+        <div
+          class="w-full p-4 border-b border-gray-500 border-solid sm:w-1/2 lg:w-1/4 md:border-b-0 sm:border-r"
+        >
+          <span class="text-xs font-medium text-gray-500 uppercase">TOTAL
+            REVENUE</span>
+          <div class="flex items-center justify-center py-4 text-center">
             <span class="mr-4 text-3xl">$485,985</span>
-            <span class="inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs">+9.1%</span>
+            <span
+              class="inline-flex items-center h-6 px-2 text-xs text-white bg-green-500 rounded"
+            >+9.1%</span>
           </div>
         </div>
-        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
-          <span class="text-xs font-medium text-gray-500 uppercase">PREDICTED MONTHLY REVENUE</span>
-          <div class="py-4 flex items-center justify-center text-center">
+        <div
+          class="w-full p-4 border-b border-gray-500 border-solid sm:w-1/2 lg:w-1/4 md:border-b-0 sm:border-r"
+        >
+          <span class="text-xs font-medium text-gray-500 uppercase">PREDICTED
+            MONTHLY REVENUE</span>
+          <div class="flex items-center justify-center py-4 text-center">
             <span class="mr-4 text-3xl">$6,576</span>
-            <span class="inline-flex items-center bg-green-500 h-6 px-2 rounded text-white text-xs">+12.0%</span>
+            <span
+              class="inline-flex items-center h-6 px-2 text-xs text-white bg-green-500 rounded"
+            >+12.0%</span>
           </div>
         </div>
-        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r">
-          <span class="text-xs font-medium text-gray-500 uppercase">ACTIVE RENTERS</span>
-          <div class="py-4 flex items-center justify-center text-center">
+        <div
+          class="w-full p-4 border-b border-gray-500 border-solid sm:w-1/2 lg:w-1/4 md:border-b-0 sm:border-r"
+        >
+          <span class="text-xs font-medium text-gray-500 uppercase">ACTIVE
+            RENTERS</span>
+          <div class="flex items-center justify-center py-4 text-center">
             <span class="mr-4 text-3xl">152</span>
-            <span class="inline-flex items-center bg-red-500 h-6 px-2 rounded text-white text-xs">-12</span>
+            <span
+              class="inline-flex items-center h-6 px-2 text-xs text-white bg-red-500 rounded"
+            >-12</span>
           </div>
         </div>
-        <div class="p-4 w-full sm:w-1/2 lg:w-1/4 border-b border-solid border-gray-300 md:border-b-0 sm:border-r flex flex-col items-center">
-          <span class="text-xs font-medium text-gray-500 uppercase">PENDING RENTS</span>
+        <div
+          class="flex flex-col items-center w-full p-4 border-b border-gray-500 border-solid sm:w-1/2 lg:w-1/4 md:border-b-0 sm:border-r"
+        >
+          <span class="text-xs font-medium text-gray-500 uppercase">PENDING
+            RENTS</span>
           <span class="block py-4 text-3xl">$930,10</span>
-
         </div>
       </section>
       <section id="chart" class="p-4">
-        <pre style="width: 100%; height: 200px; background:gray;"> 
+        <pre
+          style="width: 100%; height: 200px; background:gray;"
+        > 
           CHART HERE
         </pre>
       </section>
     </section>
 
-    <div class="flex flex-wrap flex-row">
+    <div class="flex flex-row flex-wrap">
       <div class="w-full lg:w-1/2">
-        <section class="m-4 border border-gray-300 border-solid rounded shadow">
-          <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+        <section class="m-4 border border-gray-500 border-solid rounded shadow">
+          <header
+            class="p-4 text-lg font-medium border-b border-gray-500 border-solid"
+          >
             Most Profitable Renters
           </header>
-          <section class="overflow-x-auto w-full">
-            <table class="w-full" cellpadding="0" cellspacing="0" border="0">
+          <section class="w-full overflow-x-auto">
+            <table class="w-full" cellpadding="0" cellspacing="0">
               <tbody>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-red-600 rounded-full block flex  flex-row justify-center items-center text-white">A</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-red-600 rounded-full"
+                      >
+                        A
+                      </div>
                       <div class="text-gray-500">Adobe</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $35,210.66
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-green-600 rounded-full block flex  flex-row justify-center items-center text-white">B</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-green-600 rounded-full"
+                      >
+                        B
+                      </div>
                       <div class="text-gray-500">Bank of America</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$11,456.84</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $11,456.84
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-blue-600 rounded-full block flex  flex-row justify-center items-center text-white">L</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-blue-600 rounded-full"
+                      >
+                        L
+                      </div>
                       <div class="text-gray-500">Lamborghini Automobili</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $35,210.66
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-yellow-600 rounded-full block flex  flex-row justify-center items-center text-white">G</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-yellow-600 rounded-full"
+                      >
+                        G
+                      </div>
                       <div class="text-gray-500">Google London</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$9,586.11</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $9,586.11
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -220,52 +270,82 @@
         </section>
       </div>
       <div class="w-full lg:w-1/2">
-        <section class="m-4 border border-gray-300 border-solid rounded shadow">
-          <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+        <section class="m-4 border border-gray-500 border-solid rounded shadow">
+          <header
+            class="p-4 text-lg font-medium border-b border-gray-500 border-solid"
+          >
             Latest Invoices
           </header>
-          <section class="overflow-x-auto w-full">
-            <table class="w-full" cellpadding="0" cellspacing="0" border="0">
+          <section class="w-full overflow-x-auto">
+            <table class="w-full" cellpadding="0" cellspacing="0">
               <tbody>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-red-600 rounded-full block flex  flex-row justify-center items-center text-white">A</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-red-600 rounded-full"
+                      >
+                        A
+                      </div>
                       <div class="text-gray-500">Adobe</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $35,210.66
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-green-600 rounded-full block flex  flex-row justify-center items-center text-white">B</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-green-600 rounded-full"
+                      >
+                        B
+                      </div>
                       <div class="text-gray-500">Bank of America</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$11,456.84</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $11,456.84
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-blue-600 rounded-full block flex  flex-row justify-center items-center text-white">L</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-blue-600 rounded-full"
+                      >
+                        L
+                      </div>
                       <div class="text-gray-500">Lamborghini Automobili</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$35,210.66</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $35,210.66
+                  </td>
                 </tr>
                 <tr>
-                  <td class="p-2 py-4 border-b border-solid border-gray-300">
-                    <div class="pl-4 flex flex-wrap flex-row items-center">
-                      <div class="mr-4 h-12 w-12 bg-yellow-600 rounded-full block flex  flex-row justify-center items-center text-white">G</div>
+                  <td class="p-2 py-4 border-b border-gray-500 border-solid">
+                    <div class="flex flex-row flex-wrap items-center pl-4">
+                      <div
+                        class="flex flex-row items-center justify-center w-12 h-12 mr-4 text-white bg-yellow-600 rounded-full"
+                      >
+                        G
+                      </div>
                       <div class="text-gray-500">Google London</div>
                     </div>
-
                   </td>
-                  <td class="text-right p-2 pr-4 border-b border-solid border-gray-300 text-gray-500">$9,586.11</td>
+                  <td
+                    class="p-2 pr-4 text-right text-gray-500 border-b border-gray-500 border-solid"
+                  >
+                    $9,586.11
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -273,5 +353,5 @@
         </section>
       </div>
     </div>
-	</main>
+  </main>
 </div>

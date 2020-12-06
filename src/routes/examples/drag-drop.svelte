@@ -26,6 +26,10 @@
   }
 </script>
 
+<pre>
+  {JSON.stringify(items, undefined, 2)}
+</pre>
+
 <div class="justify-center p-8 d-flex">
   <div
     class="w-full h-full"

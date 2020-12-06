@@ -1,8 +1,5 @@
 <script lang="ts">
-  // your script goes here
   import {
-    Row,
-    Col,
     TextField,
     Icon,
     Card,
@@ -24,7 +21,7 @@
   let passwordRules = [
     (v: string) => !!v || "Required",
     (v: string) => v.length <= 30 || "Max 25 characters",
-    (v: string) =>
+    () =>
       secondPassword.includes(firstPassword) || "Passwords Missmatch",
   ];
 
