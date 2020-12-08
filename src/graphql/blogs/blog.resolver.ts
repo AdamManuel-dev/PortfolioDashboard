@@ -87,6 +87,16 @@ export default class BlogResolver {
     return blogss as BlogRef[];
   }
 
+  @Query((returns) => [String])
+  async AllBlogTags() {
+    return await this.blogsService.listBlogTags();
+  }
+
+  @Query((returns) => [String])
+  async AllBlogLanguages() {
+    return await this.blogsService.listBlogLanguages();
+  }
+
   @Mutation((returns) => BlogRef)
   async CreateBlog(
     @Arg("Record", {

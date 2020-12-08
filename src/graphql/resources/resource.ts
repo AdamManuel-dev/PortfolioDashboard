@@ -210,4 +210,11 @@ export class ResourceContainer {
       return dereferenceList(response as any[], page);
     }
   }
+
+  async listResourcesTags() {
+    return this.helper.GetUniqueValues<string[]>({
+      index: "all_resources",
+      path: "tags",
+    });
+  }
 }

@@ -5,9 +5,11 @@ import type { BlogRecord } from "./blog.type";
 type Client = faunadb.Client;
 
 export interface Blog {
+  header: string | null;
   name: string;
-  tags: string[];
   description: string;
+  tags: string[];
+  languages: string[];
   sections: string[];
   content: string;
 }
@@ -204,5 +206,19 @@ export class BlogContainer {
       toReturn.shift();
     }
     return toReturn;
+  }
+
+  async listBlogTags() {
+    return this.helper.GetUniqueValues<string[]>({
+      index: "all_blogs",
+      path: "tags",
+    });
+  }
+
+  async listBlogLanguages() {
+    return this.helper.GetUniqueValues<string[]>({
+      index: "all_blogs",
+      path: "languages",
+    });
   }
 }

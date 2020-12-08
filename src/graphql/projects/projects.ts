@@ -207,4 +207,11 @@ export class ProjectContainer {
     }
     return toReturn;
   }
+
+  async listProjectLanguages() {
+    return this.helper.GetUniqueValues<string[]>({
+      index: "all_projects",
+      path: "languages",
+    });
+  }
 }

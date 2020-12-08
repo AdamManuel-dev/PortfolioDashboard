@@ -87,6 +87,11 @@ export default class NewsResolver {
     return newsss as NewsRef[];
   }
 
+  @Query((returns) => [String])
+  async AllNewsTags() {
+    return await this.newssService.listNewsTags();
+  }
+
   @Mutation((returns) => NewsRef)
   async CreateNews(
     @Arg("Record", {

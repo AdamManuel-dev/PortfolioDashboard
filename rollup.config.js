@@ -22,190 +22,246 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 const preprocess = createPreprocessors({ sourceMap: !!sourcemap });
 
 // Changes in these files will trigger a rebuild of the global CSS
-const globalCSSWatchFiles = ["postcss.config.js", "tailwind.config.js", "src/global.pcss"];
+const globalCSSWatchFiles = [
+  "postcss.config.js",
+  "tailwind.config.js",
+  "src/global.pcss",
+];
 
-const warningIsIgnored = (warning) => warning.message.includes(
-	"Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification",
-) || warning.message.includes("Circular dependency: node_modules");
+const warningIsIgnored = (warning) =>
+  warning.message.includes(
+    "Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification"
+  ) || warning.message.includes("Circular dependency: node_modules");
 
 // Workaround for https://github.com/sveltejs/sapper/issues/1266
-const onwarn = (warning, _onwarn) => (warning.code === "CIRCULAR_DEPENDENCY" && /[/\\]@sapper[/\\]/.test(warning.message)) || warningIsIgnored(warning) || console.warn(warning.toString());
+const onwarn = (warning, _onwarn) =>
+  (warning.code === "CIRCULAR_DEPENDENCY" &&
+    /[/\\]@sapper[/\\]/.test(warning.message)) ||
+  warningIsIgnored(warning) ||
+  console.warn(warning.toString());
 
 export default {
-	client: {
-		input: config.client.input().replace(/\.js$/, ".ts"),
-		output: { ...config.client.output(), sourcemap },
-		plugins: [
-			replace({
-				"process.browser": true,
-				"process.env.NODE_ENV": JSON.stringify(mode),
-			}),
-			svelte({
-				dev,
-				hydratable: true,
-				emitCss: true,
-				preprocess,
-				onwarn: (warning, handler) => {
-					// e.g. don't warn on a11y-autofocus
-					if (warning.code.includes('a11y')) {
-						console.log(warning.code)
-						return
-					}
-	
-					// let Rollup handle all other warnings normally
-					handler(warning)
-				}
-			}),
-			resolve({
-				browser: true,
-				dedupe: ["svelte"],
-			}),
-			commonjs({ sourceMap: !!sourcemap }),
-			typescript({
-				noEmitOnError: !dev,
-				sourceMap: !!sourcemap,
-			}),
-			json(),
+  client: {
+    input: config.client.input().replace(/\.js$/, ".ts"),
+    output: { ...config.client.output(), sourcemap },
+    plugins: [
+      replace({
+        "process.browser": true,
+        "process.env.NODE_ENV": JSON.stringify(mode),
+      }),
+      svelte({
+        dev,
+        hydratable: true,
+        emitCss: true,
+        preprocess,
+        onwarn: (warning, handler) => {
+          // e.g. don't warn on a11y-autofocus
+          if (warning.code.includes("a11y")) {
+            console.log(warning.code);
+            return;
+          }
 
-			legacy && babel({
-				extensions: [".js", ".mjs", ".html", ".svelte"],
-				babelHelpers: "runtime",
-				exclude: ["node_modules/@babel/**"],
-				presets: [
-					["@babel/preset-env", {
-						targets: "> 0.25%, not dead",
-					}],
-				],
-				plugins: [
-					"@babel/plugin-syntax-dynamic-import",
-					["@babel/plugin-transform-runtime", {
-						useESModules: true,
-					}],
-				],
-			}),
+          // let Rollup handle all other warnings normally
+          handler(warning);
+        },
+      }),
+      resolve({
+        browser: true,
+        dedupe: ["svelte"],
+      }),
+      commonjs({
+        sourceMap: !!sourcemap,
+        namedExports: {
+          "./node_modules/idb/build/idb.js": ["openDb", "deleteDb"],
+          "./node_modules/firebase/dist/index.cjs.js": [
+            "initializeApp",
+            "firestore",
+          ],
+        },
+      }),
+      typescript({
+        noEmitOnError: !dev,
+        sourceMap: !!sourcemap,
+      }),
+      json(),
 
-			!dev && terser({
-				module: true,
-			}),
+      legacy &&
+        babel({
+          extensions: [".js", ".mjs", ".html", ".svelte"],
+          babelHelpers: "runtime",
+          exclude: ["node_modules/@babel/**"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: "> 0.25%, not dead",
+              },
+            ],
+          ],
+          plugins: [
+            "@babel/plugin-syntax-dynamic-import",
+            [
+              "@babel/plugin-transform-runtime",
+              {
+                useESModules: true,
+              },
+            ],
+          ],
+        }),
 
-			(() => {
-				let builder;
-				let rebuildNeeded = false;
+      !dev &&
+        terser({
+          module: true,
+        }),
 
-				const buildGlobalCSS = () => {
-					if (builder) {
-						rebuildNeeded = true;
-						return;
-					}
-					rebuildNeeded = false;
-					const start = performance.now();
+      (() => {
+        let builder;
+        let rebuildNeeded = false;
 
-					try {
-						builder = spawn("node", ["--experimental-modules", "--unhandled-rejections=strict", "build-global-css.mjs", sourcemap]);
-						builder.stdout.pipe(process.stdout);
-						builder.stderr.pipe(process.stderr);
+        const buildGlobalCSS = () => {
+          if (builder) {
+            rebuildNeeded = true;
+            return;
+          }
+          rebuildNeeded = false;
+          const start = performance.now();
 
-						builder.on("close", (code) => {
-							if (code === 0) {
-								const elapsed = parseInt(performance.now() - start, 10);
-								console.log(`${colors.bold().green("✔ global css")} (src/global.pcss → static/global.css${sourcemap === true ? " + static/global.css.map" : ""}) ${colors.gray(`(${elapsed}ms)`)}`);
-							} else if (code !== null) {
-								if (dev) {
-									console.error(`global css builder exited with code ${code}`);
-									console.log(colors.bold().red("✗ global css"));
-								} else {
-									throw new Error(`global css builder exited with code ${code}`);
-								}
-							}
+          try {
+            builder = spawn("node", [
+              "--experimental-modules",
+              "--unhandled-rejections=strict",
+              "build-global-css.mjs",
+              sourcemap,
+            ]);
+            builder.stdout.pipe(process.stdout);
+            builder.stderr.pipe(process.stderr);
 
-							builder = undefined;
+            builder.on("close", (code) => {
+              if (code === 0) {
+                const elapsed = parseInt(performance.now() - start, 10);
+                console.log(
+                  `${colors
+                    .bold()
+                    .green(
+                      "✔ global css"
+                    )} (src/global.pcss → static/global.css${
+                    sourcemap === true ? " + static/global.css.map" : ""
+                  }) ${colors.gray(`(${elapsed}ms)`)}`
+                );
+              } else if (code !== null) {
+                if (dev) {
+                  console.error(`global css builder exited with code ${code}`);
+                  console.log(colors.bold().red("✗ global css"));
+                } else {
+                  throw new Error(
+                    `global css builder exited with code ${code}`
+                  );
+                }
+              }
 
-							if (rebuildNeeded) {
-								console.log(`\n${colors.bold().italic().cyan("something")} changed. rebuilding...`);
-								buildGlobalCSS();
-							}
-						});
-					} catch (err) {
-						console.log(colors.bold().red("✗ global css"));
-						console.error(err);
-					}
-				};
+              builder = undefined;
 
-				return {
-					name: "build-global-css",
-					buildStart() {
-						buildGlobalCSS();
-						globalCSSWatchFiles.forEach((file) => this.addWatchFile(file));
-					},
-					generateBundle: buildGlobalCSS,
-				};
-			})(),
-		],
+              if (rebuildNeeded) {
+                console.log(
+                  `\n${colors
+                    .bold()
+                    .italic()
+                    .cyan("something")} changed. rebuilding...`
+                );
+                buildGlobalCSS();
+              }
+            });
+          } catch (err) {
+            console.log(colors.bold().red("✗ global css"));
+            console.error(err);
+          }
+        };
 
-		preserveEntrySignatures: false,
-		onwarn,
-	},
+        return {
+          name: "build-global-css",
+          buildStart() {
+            buildGlobalCSS();
+            globalCSSWatchFiles.forEach((file) => this.addWatchFile(file));
+          },
+          generateBundle: buildGlobalCSS,
+        };
+      })(),
+    ],
 
-	server: {
-		input: { server: config.server.input().server.replace(/\.js$/, ".ts") },
-		output: { ...config.server.output(), sourcemap },
-		plugins: [
-			replace({
-				"process.browser": false,
-				"process.env.NODE_ENV": JSON.stringify(mode),
-				"module.require": "require",
-			}),
-			svelte({
-				generate: "ssr",
-				dev,
-				preprocess,
-				onwarn: (warning, handler) => {
-					// e.g. don't warn on a11y-autofocus
-					if (warning.code.includes('a11y')) {
-						console.log(warning.code)
-						return
-					}
-	
-					// let Rollup handle all other warnings normally
-					handler(warning)
-				}
-			}),
-			resolve({
-				dedupe: ["svelte"],
-			}),
-			commonjs({ sourceMap: !!sourcemap }),
-			typescript({
-				noEmitOnError: !dev,
-				sourceMap: !!sourcemap,
-			}),
-			json(),
-		],
-		external: Object.keys(pkg.dependencies).concat(
-			require("module").builtinModules || Object.keys(process.binding("natives")), // eslint-disable-line global-require
-		),
+    preserveEntrySignatures: false,
+    onwarn,
+  },
 
-		preserveEntrySignatures: "strict",
-		onwarn,
-	},
+  server: {
+    input: { server: config.server.input().server.replace(/\.js$/, ".ts") },
+    output: { ...config.server.output(), sourcemap },
+    plugins: [
+      replace({
+        "process.browser": false,
+        "process.env.NODE_ENV": JSON.stringify(mode),
+        "module.require": "require",
+      }),
+      svelte({
+        generate: "ssr",
+        dev,
+        preprocess,
+        onwarn: (warning, handler) => {
+          // e.g. don't warn on a11y-autofocus
+          if (warning.code.includes("a11y")) {
+            console.log(warning.code);
+            return;
+          }
 
-	serviceworker: {
-		input: config.serviceworker.input().replace(/\.js$/, ".ts"),
-		output: { ...config.serviceworker.output(), sourcemap },
-		plugins: [
-			resolve(),
-			replace({
-				"process.browser": true,
-				"process.env.NODE_ENV": JSON.stringify(mode),
-			}),
-			commonjs({ sourceMap: !!sourcemap }),
-			typescript({
-				noEmitOnError: !dev,
-				sourceMap: !!sourcemap,
-			}),
-			!dev && terser(),
-		],
+          // let Rollup handle all other warnings normally
+          handler(warning);
+        },
+      }),
+      resolve({
+        dedupe: ["svelte"],
+      }),
+      commonjs({
+        sourceMap: !!sourcemap,
+        namedExports: {
+          "./node_modules/idb/build/idb.js": ["openDb", "deleteDb"],
+          "./node_modules/firebase/dist/index.cjs.js": [
+            "initializeApp",
+            "firestore",
+          ],
+        },
+      }),
+      typescript({
+        noEmitOnError: !dev,
+        sourceMap: !!sourcemap,
+      }),
+      json(),
+    ],
+    external: Object.keys(pkg.dependencies).concat(
+      require("module").builtinModules ||
+        Object.keys(process.binding("natives")) // eslint-disable-line global-require
+    ),
 
-		preserveEntrySignatures: false,
-		onwarn,
-	},
+    preserveEntrySignatures: "strict",
+    onwarn,
+  },
+
+  serviceworker: {
+    input: config.serviceworker.input().replace(/\.js$/, ".ts"),
+    output: { ...config.serviceworker.output(), sourcemap },
+    plugins: [
+      resolve(),
+      replace({
+        "process.browser": true,
+        "process.env.NODE_ENV": JSON.stringify(mode),
+      }),
+      commonjs({ sourceMap: !!sourcemap }),
+      typescript({
+        noEmitOnError: !dev,
+        sourceMap: !!sourcemap,
+      }),
+      !dev && terser(),
+    ],
+
+    preserveEntrySignatures: false,
+    onwarn,
+  },
 };

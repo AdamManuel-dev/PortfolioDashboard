@@ -203,4 +203,11 @@ export class NewContainer {
     }
     return toReturn;
   }
+
+  async listNewsTags() {
+    return this.helper.GetUniqueValues<string[]>({
+      index: "all_news",
+      path: "tags",
+    });
+  }
 }

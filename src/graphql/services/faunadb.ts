@@ -86,6 +86,8 @@ export class Helper {
         data: newRecord,
       })
     );
+
+    // You can record yourself coding!
   }
 
   /**
@@ -166,6 +168,23 @@ export class Helper {
       )
     );
     return response.data;
+  }
+
+  async GetUniqueValues<T>({ path, index }: { path: string; index: string }) {
+    return this.client.query<T>(
+      q.Union(
+        q.Select(
+          "data",
+          q.Map(
+            q.Paginate(q.Match(q.Index(index))),
+            q.Lambda(
+              "item",
+              q.Select(path, q.Select("data", q.Get(q.Var("item"))))
+            )
+          )
+        )
+      )
+    );
   }
 
   /**
