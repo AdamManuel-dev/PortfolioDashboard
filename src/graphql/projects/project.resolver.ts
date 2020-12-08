@@ -90,6 +90,11 @@ export default class ProjectResolver {
     return projects as ProjectRef[];
   }
 
+  @Query((returns) => [String])
+  async AllProjectLanguages() {
+    return await this.projectsService.listProjectLanguages();
+  }
+
   @Mutation((returns) => ProjectRef)
   async CreateProject(
     @Arg("Record", {

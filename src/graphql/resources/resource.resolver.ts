@@ -92,6 +92,11 @@ export default class ResourceResolver {
     return resources as ResourceRef[];
   }
 
+  @Query((returns) => [String])
+  async AllResourceTags() {
+    return await this.resourceService.listResourcesTags();
+  }
+
   @Mutation((returns) => ResourceRef)
   async CreateResource(
     @Arg("Record", {
