@@ -28,10 +28,6 @@
   };
 </script>
 
-<style>
-  /* your styles go here */
-</style>
-
 <p class="p-2 ml-2 -mb-1 font-semibold">{placeholder}</p>
 {#if editor}
   <div class="flex flex-row items-center justify-between w-full">
@@ -62,3 +58,7 @@
     </Button>
   </div>
 {/if}
+
+<style>
+  /* your styles go here */
+</style>

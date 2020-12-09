@@ -24,10 +24,6 @@
   };
 </script>
 
-<style>
-  /* your styles go here */
-</style>
-
 <div class="grid min-h-full place-items-center text--primary">
   <div class="w-11/12 p-12 sm:w-8/12 md:w-1/2 lg:w-5/12">
     <Card>
@@ -81,3 +77,7 @@
     </Card>
   </div>
 </div>
+
+<style>
+  /* your styles go here */
+</style>

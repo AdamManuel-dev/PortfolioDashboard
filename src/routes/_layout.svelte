@@ -63,20 +63,6 @@
   $: path = $page.path.slice(1);
 </script>
 
-<style>
-  .content {
-    @apply relative flex flex-col justify-start w-full mt-4 overflow-auto;
-  }
-
-  .main-content {
-    @apply content pl-16;
-  }
-
-  .main-content-sticky {
-    @apply content pl-64;
-  }
-</style>
-
 <svelte:head>
   <title>{path ? path.charAt(0).toUpperCase() + path.slice(1) : 'Index'}</title>
 </svelte:head>
@@ -522,3 +508,17 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .content {
+    @apply relative flex flex-col justify-start w-full mt-4 overflow-auto;
+  }
+
+  .main-content {
+    @apply content pl-16;
+  }
+
+  .main-content-sticky {
+    @apply content pl-64;
+  }
+</style>
