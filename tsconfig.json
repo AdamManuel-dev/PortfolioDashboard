@@ -1,5 +1,10 @@
 {
 	"compilerOptions": {
+		"noImplicitThis": true,
+		"noEmitOnError": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"importHelpers": true,
 		"lib": [
 			"DOM",
 			"ES2017",
@@ -7,7 +12,8 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"svelte-materialify/src": ["node_modules/svelte-materialify/@types"]
+			"svelte-materialify/src": ["node_modules/svelte-materialify/@types"],
+			"@sapper/*": ["runtime/src/*"]
 		},
 		"target": "es2017",
 		"allowSyntheticDefaultImports": true,
