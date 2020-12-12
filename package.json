@@ -35,7 +35,7 @@
 		"firebase:deploy:hosting": "firebase deploy --only hosting",
 		"firebase:deploy:functions": "firebase deploy --only functions",
 		"sapper:dev": "sapper dev",
-		"sapper:build": "cross-env NODE_ENV=production sapper build --legacy",
+		"sapper:build": "c sapper build --legacy",
 		"sapper:export": "cross-env NODE_ENV=production sapper export --legacy",
 		"static:rmdir": "rimraf - __sapper__/export",
 		"static:mkdir": "mkdirp __sapper__/export",
