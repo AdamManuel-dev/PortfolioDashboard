@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { createEventDispatcher } from "svelte";
   import {
     Button,
@@ -101,6 +101,10 @@
   }
 </script>
 
+<style>
+  /* your styles go here */
+</style>
+
 <!-- markup (zero or more items) goes here -->
 <Dialog persistent bind:active>
   <Card>
@@ -118,7 +122,3 @@
   </Card>
 </Dialog>
 <slot user="{user}" popupActive="{active}" />
-
-<style>
-  /* your styles go here */
-</style>

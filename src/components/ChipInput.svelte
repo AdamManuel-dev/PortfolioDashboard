@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Button, TextField } from "svelte-materialify/src";
   import Chip from "svelte-materialify/src/components/Chip/Chip.svelte";
   import { createEventDispatcher } from "svelte";
@@ -27,6 +27,10 @@
     dispatch("value", chips);
   };
 </script>
+
+<style>
+  /* your styles go here */
+</style>
 
 <p class="p-2 ml-2 -mb-1 font-semibold">{placeholder}</p>
 {#if editor}
@@ -58,7 +62,3 @@
     </Button>
   </div>
 {/if}
-
-<style>
-  /* your styles go here */
-</style>
